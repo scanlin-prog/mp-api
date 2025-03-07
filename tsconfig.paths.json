@@ -1,0 +1,26 @@
+{
+   "compilerOptions":{
+      "baseUrl":"./",
+      "paths":{
+         "@controllers/*":[
+            "./controllers/*"
+         ],
+         "@routes/*":[
+            "./routes/*"
+         ],
+         "@errors/*":[
+            "./errors/*"
+         ],
+         "@app":[
+            "./app"
+         ],
+         "@uploads":[
+            "./uploads"
+         ],
+      },
+      "typeRoots": [
+         "declarations",
+         "node_modules/@types",
+      ],
+   }
+}
