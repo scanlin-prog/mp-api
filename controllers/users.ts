@@ -9,38 +9,17 @@ import Jdenticon from 'jdenticon'
 
 import BadRequestError from '@errors/bad-request';
 import UnauthorizedError from '@errors/unauthorized';
+import ForbiddenError from '@errors/forbidden';
 import NotFoundError from '@errors/not-found';
 import ConflictError from '@errors/conflict';
-import ForbiddenError from '@errors/forbidden';
 
-import type { IRequestUser } from 'types/user';
+import { 
+    handleError,
+    handleRequestUserId,
+    handleUnauthorizedError 
+} from '@utils/utils';
 
 const { NODE_ENV, JWT_SECRET } = process.env;
-
-// Обработчик ошибки авторизации
-const handleUnauthorizedError = (value: any) => {
-    if (!value) {
-        throw new UnauthorizedError('Неверный логин или пароль');
-    }
-}
-
-// Обработчик пользователя из запроса
-const handleRequestUserId = (req: Request) => {
-    if (!req.user) {
-        console.log('Отсутствует пользователь в запросе');
-        return null;
-    }
-    return (req.user as IRequestUser).userId;
-}
-
-// Обработчик стандартных ошибок
-const handleError = (error: any, next: NextFunction) => {
-    const err = error as Error
-    if (err.name === 'ValidationError') {
-        throw new BadRequestError('Переданы некорректные данные');
-    }
-    next(error);
-};
 
 const UserController = {
     register: async (
@@ -149,12 +128,15 @@ const UserController = {
         next: NextFunction
     ): Promise<any> => {
         const { id } = req.params;
-        const userId = handleRequestUserId(req);
-    
-        // Проверка существования id пользователя
-        if (!userId) return;
         
         try {
+            const userId = handleRequestUserId(req);
+
+            // Проверка существования id пользователя
+            if (!userId) {
+                throw new NotFoundError('Не удалось найти пользователя');
+            };
+
             const user = await prisma.user.findUnique({
                 where: { id },
                 include: { 
@@ -187,19 +169,22 @@ const UserController = {
     ): Promise<any> => {
         const { id } = req.params;
         const { email, name, dateOfBirth, bio, location } = req.body;
-        const userId = handleRequestUserId(req);
-    
-        // Проверка существования id пользователя
-        if (!userId) return;
-
-        let filePath;
-
-        // Проверка на наличие файла и пути к файлу в запросе
-        if (req.file && req.file.path) {
-            filePath =  req.file.path;
-        }
 
         try {
+            const userId = handleRequestUserId(req);
+
+            // Проверка существования id пользователя
+            if (!userId) {
+                throw new NotFoundError('Не удалось найти пользователя');
+            };
+
+            let filePath;
+
+            // Проверка на наличие файла и пути к файлу в запросе
+            if (req.file && req.file.path) {
+                filePath =  req.file.path;
+            }
+            
             // Проверка, что пользователь обновляет свою информацию
             if (id !== userId) {
                 throw new ForbiddenError('Доступ запрещен');
@@ -242,7 +227,9 @@ const UserController = {
             const userId = handleRequestUserId(req);
     
             // Проверка существования id пользователя
-            if (!userId) return;
+            if (!userId) {
+                throw new NotFoundError('Не удалось найти пользователя');
+            };
 
             const user = await prisma.user.findUnique({
                 where: { id: userId },

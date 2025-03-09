@@ -11,6 +11,9 @@
          "@errors/*":[
             "./errors/*"
          ],
+         "@utils/*":[
+            "./utils/*"
+         ],
          "@app":[
             "./app"
          ],

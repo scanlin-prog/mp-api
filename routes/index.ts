@@ -3,6 +3,8 @@ import multer from 'multer';
 import { UserController } from '@controllers/index';
 import authenticateToken from "middlewares/auth";
 
+import postRoutes from './posts';
+
 const router = Router();
 
 const uploadDestionation = 'uploads'
@@ -29,5 +31,10 @@ router.patch(
     uploads.single('avatar'), 
     UserController.updateUser
 )
+
+// Маршруты постов
+router.use('/', postRoutes)
+
+// Маршруты комментариев
 
 export default router;
