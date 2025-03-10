@@ -27,6 +27,8 @@ const handleError = (error: any, next: NextFunction) => {
     if (err.name === 'ValidationError') {
         throw new BadRequestError('Переданы некорректные данные');
     }
+
+    console.error(err)
     next(error);
 };
 
