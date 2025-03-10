@@ -3,8 +3,9 @@ import multer from 'multer';
 import UserController from '@controllers/users';
 import authenticateToken from "middlewares/auth";
 
-import postsRoutes from '@routes/posts';
-import commentsRoutes from '@routes/comments';
+import postsRouter from '@routes/posts';
+import commentsRouter from '@routes/comments';
+import likesRouter from '@routes/likes';
 
 const router = Router();
 
@@ -34,7 +35,8 @@ router.patch(
     UserController.updateUser
 )
 
-router.use('/', postsRoutes)  // Маршруты постов
-router.use('/', commentsRoutes)  // Маршруты комментариев
+router.use('/', postsRouter)  // Маршруты постов
+router.use('/', commentsRouter)  // Маршруты комментариев
+router.use('/', likesRouter)  // Маршруты лайков
 
 export default router;

@@ -16,9 +16,8 @@ const PostController = {
         res: Response, 
         next: NextFunction
     ): Promise<any> => {
-        const { content } = req.body;
-
         try {
+            const { content } = req.body;
             const authorId = handleRequestUserId(req);
 
             // Проверка существования id пользователя
@@ -81,9 +80,8 @@ const PostController = {
         res: Response, 
         next: NextFunction
     ): Promise<any> => {
-        const { id } = req.params;
-
         try {
+            const { id } = req.params;
             const userId = handleRequestUserId(req);
 
             // Проверка существования id пользователя
@@ -124,9 +122,8 @@ const PostController = {
         res: Response, 
         next: NextFunction
     ): Promise<any> => {
-        const { id } = req.params;
-
         try {
+            const { id } = req.params;
             const userId = handleRequestUserId(req);
 
             // Проверка существования id пользователя
@@ -144,7 +141,7 @@ const PostController = {
             }
 
             if (post.authorId !== userId) {
-                throw new ForbiddenError('Доступ запрещен');
+                throw new ForbiddenError('Доступ к удалению поста запрещен');
             }
 
             // Удаляем все комментарии и лайки связанные с постом

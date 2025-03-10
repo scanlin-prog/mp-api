@@ -18,12 +18,11 @@ const CommentController = {
     ): Promise<any> => {
         try {
             const { postId, content } = req.body;
+            const userId = handleRequestUserId(req);
 
             if (!postId || !content) {
                 throw new BadRequestError('Все поля обязательные!');
             }
-
-            const userId = handleRequestUserId(req);
 
             if (!userId) {
                 throw new NotFoundError('Не удалось найти пользователя');

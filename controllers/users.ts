@@ -27,9 +27,9 @@ const UserController = {
         res: Response, 
         next: NextFunction
     ): Promise<any> => {
-        const { email, password, name } = req.body
-        
         try {
+            const { email, password, name } = req.body
+
             // Проверка обязательных полей
             if (!email || !password || !name) {
                 throw new BadRequestError('Все поля обязательные!');
@@ -77,9 +77,9 @@ const UserController = {
         res: Response,
         next: NextFunction
     ): Promise<any> => {
-        const { email, password } = req.body;
-
         try {
+            const { email, password } = req.body;
+
             // Проверка обязательных полей
             if (!email || !password) {
                 throw new BadRequestError('Все поля обязательные!');
@@ -127,9 +127,8 @@ const UserController = {
         res: Response,
         next: NextFunction
     ): Promise<any> => {
-        const { id } = req.params;
-        
         try {
+            const { id } = req.params;
             const userId = handleRequestUserId(req);
 
             // Проверка существования id пользователя
@@ -167,10 +166,10 @@ const UserController = {
         res: Response,
         next: NextFunction
     ): Promise<any> => {
-        const { id } = req.params;
-        const { email, name, dateOfBirth, bio, location } = req.body;
-
         try {
+            const { id } = req.params;
+            const { email, name, dateOfBirth, bio, location } = req.body;
+
             const userId = handleRequestUserId(req);
 
             // Проверка существования id пользователя
@@ -187,7 +186,9 @@ const UserController = {
             
             // Проверка, что пользователь обновляет свою информацию
             if (id !== userId) {
-                throw new ForbiddenError('Доступ запрещен');
+                throw new ForbiddenError(
+                    'Доступ к обновлению данных запрещен'
+                );
             }
 
             if (email) {
