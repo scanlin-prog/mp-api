@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { UserController } from '@controllers/index';
+import UserController from '@controllers/users';
 import authenticateToken from "middlewares/auth";
 
-import postRoutes from './posts';
+import postsRoutes from '@routes/posts';
+import commentsRoutes from '@routes/comments';
 
 const router = Router();
 
@@ -19,6 +20,7 @@ const storage = multer.diskStorage({
 
 const uploads = multer({ storage: storage })
 
+// Маршруты пользователя
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 
@@ -32,9 +34,7 @@ router.patch(
     UserController.updateUser
 )
 
-// Маршруты постов
-router.use('/', postRoutes)
-
-// Маршруты комментариев
+router.use('/', postsRoutes)  // Маршруты постов
+router.use('/', commentsRoutes)  // Маршруты комментариев
 
 export default router;

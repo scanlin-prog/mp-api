@@ -37,7 +37,7 @@ const PostController = {
                 },
             });
 
-            res.status(200).json(post);
+            res.status(201).json(post);
         } catch (error) {
             handleError(error, next)
         }
@@ -147,6 +147,7 @@ const PostController = {
                 throw new ForbiddenError('Доступ запрещен');
             }
 
+            // Удаляем все комментарии и лайки связанные с постом
             const transaction = await prisma.$transaction([
                 prisma.comment.deleteMany({ where: { postId: id } }),
                 prisma.like.deleteMany({ where: { postId: id } }),
