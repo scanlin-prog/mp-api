@@ -6,6 +6,7 @@ import authenticateToken from "middlewares/auth";
 import postsRouter from '@routes/posts';
 import commentsRouter from '@routes/comments';
 import likesRouter from '@routes/likes';
+import followsRouter from '@routes/follows';
 
 const router = Router();
 
@@ -38,5 +39,6 @@ router.patch(
 router.use('/', postsRouter)  // Маршруты постов
 router.use('/', commentsRouter)  // Маршруты комментариев
 router.use('/', likesRouter)  // Маршруты лайков
+router.use('/', followsRouter)  // Маршруты подписок
 
 export default router;

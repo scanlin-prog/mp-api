@@ -5,13 +5,6 @@ import UnauthorizedError from '@errors/unauthorized';
 
 import type { IRequestUser } from 'types/user';
 
-// Обработчик ошибки авторизации
-const handleUnauthorizedError = (value: any) => {
-    if (!value) {
-        throw new UnauthorizedError('Неверный логин или пароль');
-    }
-}
-
 // Обработчик пользователя из запроса
 const handleRequestUserId = (req: Request) => {
     if (!req.user) {
@@ -33,7 +26,6 @@ const handleError = (error: any, next: NextFunction) => {
 };
 
 export {
-    handleUnauthorizedError,
     handleRequestUserId,
     handleError
 }

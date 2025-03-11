@@ -15,8 +15,7 @@ import ConflictError from '@errors/conflict';
 
 import { 
     handleError,
-    handleRequestUserId,
-    handleUnauthorizedError 
+    handleRequestUserId
 } from '@utils/utils';
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -101,7 +100,9 @@ const UserController = {
             // Проверка пароля
             const valid = await bcrypt.compare(password, user.password);
 
-            handleUnauthorizedError(valid);
+            if (!valid) {
+                throw new UnauthorizedError('Неверный логин или пароль');
+            }
 
             // Проверка переменной окружения
             if (!JWT_SECRET) {
@@ -144,7 +145,9 @@ const UserController = {
                 }
             })
 
-            handleUnauthorizedError(user);
+            if (!user) {
+                throw new UnauthorizedError('Неверный логин или пароль');
+            }
 
             // Проверяем, подписан ли текущий пользователь на пользователя
             const isFollowing = await prisma.follows.findFirst({
