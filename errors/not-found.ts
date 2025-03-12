@@ -1,10 +1,10 @@
 class NotFoundError extends Error {
-    readonly statusCode: number;
+  readonly statusCode: number;
 
-    constructor(message: string) {
-      super(message);
-      this.statusCode = 404;
-    }
+  constructor(message: string) {
+    super(message);
+    this.statusCode = 404;
+  }
 }
-  
+
 export default NotFoundError;

@@ -1,53 +1,53 @@
-import express, { 
-  Express, 
-  Request, 
-  Response, 
-  NextFunction,
-} from "express";
-import dotenv from "dotenv";
+import express, { Express, Request, Response, NextFunction } from 'express';
+import dotenv from 'dotenv';
 
 import { HttpError } from 'http-errors';
-import path from 'path';
 import cookieParser from 'cookie-parser';
-import logger from 'morgan';
 import fs from 'fs';
+import cors from 'cors';
+import { errors } from 'celebrate';
 
-import router from "@routes/index";
+import { requestLogger, errorLogger } from '@middlewares/logger';
+
+import router from '@routes/index';
 
 // Загрузка переменных окружения с .env в приложение
 dotenv.config();
 
 const app: Express = express();
 
-app.use(logger('dev'));
+app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// Подключение обработчика логирования запросов
+app.use(requestLogger);
+
 // Раздача статических файлов
-app.use('/uploads', express.static('uploads'))
+app.use('/uploads', express.static('uploads'));
 
 // Подключение маршрутов
-app.use('/api', router)
+app.use('/api', router);
+
+// Подключение обработчика логирования ошибок
+app.use(errorLogger);
+
+// Обработка ошибок библиотеки celebrate
+app.use(errors());
 
 // Создает папку uploads, если ее нет
 if (!fs.existsSync('uploads')) {
-  fs.mkdirSync('uploads')
+  fs.mkdirSync('uploads');
 }
 
 // Обработчик ошибок
-app.use((
-  err: HttpError, 
-  req: Request, 
-  res: Response, 
-  next: NextFunction
-) => {
+app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
   const { statusCode = 500, message } = err;
-  
+
   res.status(statusCode).send({
-    message: statusCode === 500
-      ? 'На сервере произошла ошибка'
-      : message,
+    message: statusCode === 500 ? 'На сервере произошла ошибка' : message,
   });
 });
 
