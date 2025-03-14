@@ -1,26 +1,15 @@
 {
-   "compilerOptions":{
-      "baseUrl":"./",
-      "paths":{
-         "@controllers/*":[
-            "./controllers/*"
-         ],
-         "@routes/*":[
-            "./routes/*"
-         ],
-         "@errors/*":[
-            "./errors/*"
-         ],
-         "@app":[
-            "./app"
-         ],
-         "@uploads":[
-            "./uploads"
-         ],
-      },
-      "typeRoots": [
-         "declarations",
-         "node_modules/@types",
-      ],
-   }
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@controllers/*": ["./controllers/*"],
+      "@routes/*": ["./routes/*"],
+      "@middlewares/*": ["./middlewares/*"],
+      "@errors/*": ["./errors/*"],
+      "@utils/*": ["./utils/*"],
+      "@app": ["./app"],
+      "@uploads": ["./uploads"]
+    },
+    "typeRoots": ["declarations", "node_modules/@types"]
+  }
 }

@@ -34,16 +34,14 @@ function normalizePort(val: string) {
 }
 
 // Обратная фукнция для события "ошибка" HTTP-сервера.
-function onError(error: { syscall: string; code: any; }) {
+function onError(error: { syscall: string; code: string }) {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
-  // устранение конкретныъ ошибок при прослушивании 
+  // Устранение конкретных ошибок при прослушивании
   // с помощью дружественных сообщений
   switch (error.code) {
     case 'EACCES':
@@ -63,9 +61,8 @@ function onError(error: { syscall: string; code: any; }) {
 function onListening() {
   const addr = server.address();
   if (addr) {
-    const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+    const bind =
+      typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
     debugServer('Listening on ' + bind);
   }
 }

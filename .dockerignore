@@ -1,10 +1,17 @@
 # Deps
 node_modules
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+#README и файлы лицензий
+*.md
+LICENSE
+
+# Production
 build/
 uploads/
-
-# Optional npm cache directory
-.npm
 
 #IDE Files
 .DS_Store
@@ -13,6 +20,9 @@ uploads/
 
 # Misc
 *.env
+.env.local
+.git
+.gitignore
 
 # Logs
 logs
