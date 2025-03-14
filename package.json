@@ -5,7 +5,8 @@
   "main": "build/bin/index.js",
   "scripts": {
     "build": "npm run lint && tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
-    "start": "node bin/index.js --open --watch",
+    "start": "node bin/index.js",
+    "start:dev": "node build/bin/index.js",
     "dev": "nodemon -r tsconfig-paths/register src/bin/index.ts --open --watch",
     "lint": "eslint . --fix --report-unused-disable-directives --max-warnings 0"
   },
