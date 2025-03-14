@@ -1,6 +1,18 @@
-# directories
-/.idea/
-/.vscode/
+# Deps
+node_modules
+build/
+uploads/
+
+# Optional npm cache directory
+.npm
+
+#IDE Files
+.DS_Store
+.idea
+.vscode/*
+
+# Misc
+*.env
 
 # Logs
 logs
@@ -10,17 +22,3 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-# Dependency directory
-node_modules
-build
-uploads
-
-# Optional npm cache directory
-.npm
-
-# Optional REPL history
-.DS_Store
-.idea
-.vscode/*
-.env
