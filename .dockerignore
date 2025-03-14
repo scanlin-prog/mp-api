@@ -1,0 +1,34 @@
+# Deps
+node_modules
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+#README и файлы лицензий
+*.md
+LICENSE
+
+# Production
+build/
+uploads/
+
+#IDE Files
+.DS_Store
+.idea
+.vscode/*
+
+# Misc
+*.env
+.env.local
+.git
+.gitignore
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
